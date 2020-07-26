@@ -6,3 +6,4 @@ how to run :
 - open terminal on your mac, go to directory of project  
 - type node maxProfit (question max Profit) 
 - type node lexicoOrdering (question lexicographical order) 
+- type node bilanganFactorial (question bilangan factorial no 3) 
