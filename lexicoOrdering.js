@@ -18,7 +18,7 @@ function getStringFromGithub(){
 	}
 }
 
-function txtToArray(source){
+function firstOrder(source){
 	try{
 	   let newObjLexico = [];
 	  	   
@@ -38,10 +38,38 @@ function txtToArray(source){
 	   }) 	
 	   	
 	   	let cleanArr = newObjLexico.filter(x => typeof x === 'string' && x.length > 0)
-	  	return cleanArr.join("");					  
+	   	return cleanArr.join("");					  
     }catch(e){
 	    return e.message
     }
+}
+
+function smallestOrder(source){
+	try{
+	   let newObjLexico = [];
+	  	   
+	   const arr =  source.toString().split("");
+	   
+	   arr.map((data,index)=>{
+	   	if(newObjLexico.length == 0){
+	   		newObjLexico.push(data)
+	   	}else if(newObjLexico.indexOf(data) ==  -1){
+	   		newObjLexico.push(data)
+	   	}else{
+		   if(newObjLexico[newObjLexico.length -1] < data ){
+			   delete newObjLexico[newObjLexico.indexOf(data)] 
+			   newObjLexico.push(data)
+		   }
+	   	}
+		   
+	   }) 	
+	   	
+	   	let cleanArr = newObjLexico.filter(x => typeof x === 'string' && x.length > 0)
+	   	return cleanArr.join("");					  
+    }catch(e){
+	    return e.message
+    }
+	
 }
 
 
@@ -49,17 +77,19 @@ function txtToArray(source){
 
 async function main(){
 	try{
-		let source = await getStringFromGithub()
+		let data = await getStringFromGithub()
 	                    .then((result)=>{
-		                 	let arrayResult =  txtToArray(result)
-						 	return arrayResult
+		                 	let firstOrders =  firstOrder(result)
+		                 	let smallestOrders = smallestOrder(result)
+						 	return { firstOrders,smallestOrders}
 		                 	
 	                    })
 	                    .catch((error)=>{
 		                    console.log(error)
 	                    })
 
-	    console.log(source)
+	    console.log('first order :' ,data.firstOrders)
+	    console.log('smallest order : ' ,data.smallestOrders)
 	}catch(error){
 		console.log(error.message ||  error.stderr)
 	}
